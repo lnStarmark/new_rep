@@ -1,0 +1,29 @@
+def pars_print(jsn):
+
+    for key1, val1 in jsn.items():
+        print(key1)
+
+        for key2, val2 in val1.items():
+            print(f"\t{key2}")
+
+            for key3, val3 in val2.items():
+                print(f"\t\t{key3}")
+
+                for key4, val4 in val3.items():
+                    if (key4 == "name" or key4 == "vers" or key4 == "year"):
+                        print(f"\t\t\t{key4}\t{val4}")
+
+                    if (key4 == "prog" or key4 == "studio"):
+                        print(f"\t\t\t{key4}")
+                        for key5, val5 in val4.items():
+                            print(f"\t\t\t\t\t{key5}\t{val5}")
+
+                    if (key4 == "parts"):
+                        print(f"\t\t\t{key4}")
+                        for key5, val5 in val4.items():
+                            if(isinstance(val5, dict)):
+                                print(f"\t\t\t\t\t{key5}")
+                                for key6, val6 in val5.items():
+                                    print(f"\t\t\t\t\t\t{key6}\t{val6}")
+                            else:
+                                print(f"\t\t\t\t\t{key5}\t{val5}")
