@@ -24,6 +24,7 @@ def selfdoc():
     
            def pars_print(jsn)                      parser and print 
            def parser(jsn)                          parser in to string
+           def Pars(jsn)                            abstract parser and print
            
            <Open 'data_file.json'>        
                 with open(FULL_PATH_JSON, "r") as read_file:
@@ -73,6 +74,74 @@ def Out_KEY_VAL(stroka: str, key, val, tab: int, points2=0):
     else:
         stroka += set_tt(tab) + key + set_tt(1) + str(val) + ENDSTR
     return stroka
+
+STROKA = ""
+def Pars(dt, lev):
+    global STROKA
+
+    # --- level counter ---
+    LEV = lev
+
+    if (isinstance(dt, dict)):
+        LEV += 1
+        st = "\t" * LEV
+
+        for key in dt:
+            val = dt[key]
+
+            # --- if current value is dict ---
+            STROKA += f"{st}{key}:"
+            if (isinstance(dt[key], dict)):
+                STROKA += "\n"
+
+            # --- recursion ------------------
+            Pars(val, LEV)
+            # --------------------------------
+
+            # --- LEVEL to down ---
+            if (isinstance(dt[key], dict)):
+                lev -= 1
+
+    else:
+        # --- simple printing final value ---
+        st = "\t"
+        STROKA += f"{st}{dt}\n"
+
+
+LEVEL = -1
+def Pars_print(dt):
+    global LEVEL
+
+    if (isinstance(dt, dict)):
+        #--- level counter ---
+        LEVEL += 1
+
+        for key in dt:
+            #--- get value by key
+            val = dt[key]
+
+            #--- calculate shift next level ---
+            st = "\t" * LEVEL
+
+            #--- if current value is dict ---
+            if (isinstance(dt[key], dict)):
+                #--- print with '\n'
+                print(f"{st}{key}")
+            else:
+                #--- print without '\n'
+                print(f"{st}{key}: ", end="")
+
+            #--- recursion ------------------
+            Pars_print(val)
+            #--------------------------------
+
+            #--- return back and LEVEL -= 1 ---
+            if (isinstance(dt[key], dict)):
+                LEVEL -= 1
+    else:
+        #--- simple printing final value ---
+        st = "\t"
+        print(f"{st}{dt}")
 
 
 def parser(jsn):
@@ -137,19 +206,26 @@ def main():
 
     strc.zagolovok("'data' parser to string and print to console")
 
+    Pars(data, -1)
+    print(STROKA)
+
+    '''
+    Pars_print(data)
+
 
     st = parser(data)
     print(st)
-
+    strc.zagolovok("Save after pars_print")
+    with open(FULL_PATH_STRING_SAVE, "w") as write_file:
+        write_file.write(st)    
+    '''
 
 
     strc.zagolovok("Save data")
     with open(FULL_PATH_JSON_SAVE, "w") as write_file:
         json.dump(data, write_file)
 
-    strc.zagolovok("Save after pars_print")
-    with open(FULL_PATH_STRING_SAVE, "w") as write_file:
-        write_file.write(st)
+
 
 
 if __name__ == "__main__":
