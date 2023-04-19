@@ -209,10 +209,14 @@ def main():
     Pars(data, -1)
     print(STROKA)
 
+    strc.zagolovok("Save after pars_print")
+    with open(FULL_PATH_STRING_SAVE, "w") as write_file:
+        write_file.write(STROKA)
+
+
     '''
     Pars_print(data)
-
-
+    
     st = parser(data)
     print(st)
     strc.zagolovok("Save after pars_print")
