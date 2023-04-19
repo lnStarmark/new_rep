@@ -16,6 +16,12 @@ does not pretend to be of any practical use.
 
 Just a tutorial.
 
+#---
+
+The program is quite well self-documented and 
+
+there is no need to make a description in Readme.md
+
 #---------------------------------------------------------------------------
 
 
